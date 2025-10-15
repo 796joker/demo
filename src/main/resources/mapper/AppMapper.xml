@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--对应mapper接口的完整类名,此处配置文件是mapper层接口函数的具体对接数据库的实现-->
+<mapper namespace="com.example.demo.app.mapper.AppMapper">
+
+    <!-- 结果映射：定义数据库字段与 Java 属性的对应关系 -->
+    <resultMap id="AppResultMap" type="AppEntity">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="fullDescription" column="full_description"/>
+        <result property="avatar" column="avatar"/>
+        <result property="category" column="category"/>
+        <result property="price" column="price"/>
+        <result property="rating" column="rating"/>
+        <result property="downloads" column="downloads"/>
+        <result property="reviews" column="reviews"/>
+        <result property="author" column="author"/>
+        <result property="publishedAt" column="published_at"/>
+    </resultMap>
+
+    <!--此处定义mapper层的查询函数所对应的具体SQL语句-->
+    <!--定义查询 SQL，id 对应接口方法名，resultMap 指定结果映射-->
+    <!-- 查询所有应用 -->
+    <select id="findAllOrderById" resultMap="AppResultMap">
+        SELECT * FROM t_app ORDER BY id ASC
+    </select>
+
+    <!--#{参数名}：MyBatis 参数占位符，自动处理 SQL 注入防护-->
+    <!-- 根据 ID 查询 -->
+    <select id="findById" resultMap="AppResultMap">
+        SELECT * FROM t_app WHERE id = #{id}
+    </select>
+
+    <!-- 根据分类查询 -->
+    <select id="findByCategory" resultMap="AppResultMap">
+        SELECT * FROM t_app WHERE category = #{category} ORDER BY id ASC
+    </select>
+
+    <!-- 按评分排序 -->
+    <select id="findAllOrderByRating" resultMap="AppResultMap">
+        SELECT * FROM t_app ORDER BY rating DESC
+    </select>
+
+    <!-- 按下载量排序 -->
+    <select id="findAllOrderByDownloads" resultMap="AppResultMap">
+        SELECT * FROM t_app ORDER BY downloads DESC
+    </select>
+
+</mapper>
